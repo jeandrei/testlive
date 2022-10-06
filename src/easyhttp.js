@@ -20,27 +20,16 @@ class EasyHTTP {
   async post(url, data) {
     const response = await fetch(url, {
       method: 'POST',
+      //had to add no-core, no-cache and omit to work with google spreadsheet
       mode: 'no-cors',
       cache: 'no-cache',
-      credentials: 'omit',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
     })
-    const resData = await response.json()
-    return resData
-  }
-
-  async postForm(url, form) {
-    const response = await fetch(url, {
-      method: 'POST',
-      body: new FormData(form),
-    })
-      .then((response) => console.log('Success!', response))
-      .catch((error) => console.error('Error!', error.message))
-    //const resData = await response.json()
-    //return resData
+    /**I had to change the return to make it work at google spreadsheet because it responds with a response type of opaque */
+    return data
   }
 
   // Make an HTTP PUT Request
